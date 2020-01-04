@@ -4,11 +4,19 @@ import os
 import time
 from netdata import Netdata
 from slackApi import SlackApi
-def show():
+def show(alerts = 1):
     netdata = Netdata()
-    data = netdata.getAllMetrics()
+    try:
+        data = netdata.getAllMetrics()
+    except:
+        slack.sendAlert('Alerta!, Cargo Viewer não responde')
+        return 0 
+
     os.system('cls' if os.name == 'nt' else 'clear')
     for metric in data.keys():
+        if alerts == 0:
+            if metric == 'system.load':
+                slack.sendAlert('Servidor funcionando perfeitamente\n. Load de 15 mim ' + str(data[metric]['dimensions']['load15']['value']))
         if metric == 'system.load':
             print("System Load\n")
             print("  load 1: " + str(data[metric]['dimensions']['load1']['value']))
@@ -51,7 +59,12 @@ def show2():
 print('Start service')
 slack = SlackApi()
 slack.sendAlert('Iniciando serviço de monitoramento')
-
+contador = 0
 while True:
-    show()
+    if contador > (60 * 2):
+        show(0)
+        contador = 0
+    else:
+        show()
+    contador = contador + 1
     time.sleep(30)
