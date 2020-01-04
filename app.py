@@ -4,7 +4,6 @@ import os
 import time
 from netdata import Netdata
 from slackApi import SlackApi
-slack = SlackApi()
 def show():
     netdata = Netdata()
     data = netdata.getAllMetrics()
@@ -49,6 +48,10 @@ def show2():
     for metric in data.keys():
         print(metric)
         
+print('Start service')
+slack = SlackApi()
+slack.sendAlert('Iniciando serviço de monitoramento')
+
 while True:
     show()
     time.sleep(30)
