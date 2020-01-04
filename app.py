@@ -2,17 +2,11 @@ import requests
 from dotenv import load_dotenv
 import os
 import time
+from netdata import Netdata
 
-# carregando configurações
-load_dotenv()
-HOST = os.getenv("host")
 def show():
-
-    #request = requests.get(HOST + "/api/v1/data?chart=system.cpu&after=-1&points=1&group=average&format=json")
-    #request = requests.get(HOST + "/api/v1/chart?chart=system.cpu")
-    #request = requests.get(HOST + "/api/v1/charts")
-    request = requests.get(HOST + "/api/v1/allmetrics?format=json")
-    data = request.json()
+    netdata = Netdata()
+    data = netdata.getAllMetrics()
     os.system('cls' if os.name == 'nt' else 'clear')
     for metric in data.keys():
         #print(metric)
@@ -24,4 +18,4 @@ def show():
 
 while True:
     show()
-    time.sleep(1)
+    time.sleep(5)
