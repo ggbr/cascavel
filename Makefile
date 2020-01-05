@@ -5,3 +5,5 @@ build:
 
 bash:
 	docker-compose exec app /bin/bash
+start:
+	docker-compose up
