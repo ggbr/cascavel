@@ -11,3 +11,5 @@ and send alert message for Slack  with metrics of server Netdata in monitoring
 
 ## Install
  - `make install`
+
+For install Netdata  server in monitored server [Link](https://github.com/netdata/netdata).
