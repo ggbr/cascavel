@@ -8,3 +8,6 @@ and send alert message for Slack  with metrics of server Netdata in monitoring
 - Laravel - web server for config of alert agent 
 - Python agent - Send message of Netdata server  metrics for Slack
 - MySQL - Save config of alert server
+
+## Install
+ - `make install`
