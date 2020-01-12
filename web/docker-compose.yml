@@ -1,14 +1,9 @@
 version: "3"
 
 services:
-  agent:
-      build:
-        context: ./agent
-      volumes: 
-        - ./agent:/app
   webserver:
     build:
-        context: ./web/www
+        context: ./www
     ports:
        - "80:80"
     environment:
@@ -18,11 +13,11 @@ services:
       - redis
       - mysql
     volumes: 
-      - ./web/www:/var/www/html
-      - ./web/config/php/php.ini:/usr/local/etc/php/php.ini
-      - ./web/config/vhosts:/etc/apache2/sites-enabled
-      - ./web/logs/apache2:/var/log/apache2
-      - ./web/config/ssl:/var/ssl
+      - ./www:/var/www/html
+      - ./config/php/php.ini:/usr/local/etc/php/php.ini
+      - ./config/vhosts:/etc/apache2/sites-enabled
+      - ./logs/apache2:/var/log/apache2
+      - ./config/ssl:/var/ssl
   mysql:
     image: mysql:8.0.18
     links:
@@ -48,8 +43,4 @@ services:
     environment:
     - ALLOW_EMPTY_PASSWORD=yes
     - REDIS_PASSWORD=1234
-
-
-     
-
 
