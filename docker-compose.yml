@@ -2,27 +2,33 @@ version: "3"
 
 services:
   agent:
-      build:
-        context: ./agent
-      volumes: 
-        - ./agent:/app
-  webserver:
     build:
-        context: ./web/www
-    ports:
-       - "80:80"
-    environment:
-     - APACHE_RUN_USER=#1000
-     - TERM=xterm-256color
-    links: 
-      - redis
-      - mysql
+      context: ./agent
     volumes: 
-      - ./web/www:/var/www/html
-      - ./web/config/php/php.ini:/usr/local/etc/php/php.ini
-      - ./web/config/vhosts:/etc/apache2/sites-enabled
-      - ./web/logs/apache2:/var/log/apache2
-      - ./web/config/ssl:/var/ssl
+      - ./agent:/app
+  nginx:
+    image: nginx:alpine
+    restart: unless-stopped
+    tty: true
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./web/www/nginx/conf.d/:/etc/nginx/conf.d/
+      - ./web/www:/var/www/
+
+
+
+  app:
+    build:
+      context: ./web/www
+    restart: unless-stopped
+    tty: true
+    environment:
+      SERVICE_NAME: app
+      SERVICE_TAGS: dev
+    volumes: 
+      - ./web/www:/var/www/
   mysql:
     image: mysql:8.0.18
     links:

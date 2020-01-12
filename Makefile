@@ -1,5 +1,5 @@
 bash:
-	docker-compose exec  webserver "/bin/bash" 
+	docker-compose exec  app "/bin/bash" 
 install:
 	docker-compose up -d
 	docker-compose exec webserver sh -c "composer install"
