@@ -1,9 +1,20 @@
-build:
-	docker-compose stop
-	docker-compose rm
-	docker-compose build
-
 bash:
-	docker-compose exec app /bin/bash
-start:
-	docker-compose up
+	docker-compose exec  app "/bin/bash" 
+
+install:
+	docker-compose up --build
+	docker-compose exec app sh -c "composer install"
+	sudo chmod 777 -R .
+	docker-compose exec app sh -c "cp .env.example .env"
+	docker-compose exec app sh -c "php artisan migrate"
+
+
+reset:
+	docker-compose stop
+	docker-compose rm -f
+	docker-compose build
+	docker-compose up -d
+	docker-compose exec webserver composer install
+remove:
+	docker-compose stop
+	docker-compose rm -f
