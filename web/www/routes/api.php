@@ -13,6 +13,8 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
-});
+
+Route::get('service-log/set/{id}/{status}','ApiController@setServiceLog');
+
+Route::get('service/get/all','ApiController@getServicesAll');
+Route::post('service/create','ApiController@setServices');

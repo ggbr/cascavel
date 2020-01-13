@@ -55,16 +55,37 @@ def show2():
     os.system('cls' if os.name == 'nt' else 'clear')
     for metric in data.keys():
         print(metric)
-        
+
+def services():
+
+    request = requests.get("http://192.168.1.42/api/service/get/all")
+    services = list(request.json())
+    for service in services:
+        print(service['name'])       
+        r = requests.get(service['url'])
+        if r.status_code == 200:
+            print('o serviço ' + service['name'] + ' esta OK' )
+        else:
+            print('serviço ' + service['name'] +' esta fora do ar')
+            slack.sendAlert('serviço ' + service['name'] +' esta fora do ar')
+
+
+
 print('Start service')
 slack = SlackApi()
-slack.sendAlert('Iniciando serviço de monitoramento')
+#slack.sendAlert('Iniciando serviço de monitoramento')
 contador = 0
-while True:
-    if contador > (60 * 2):
-        show(0)
-        contador = 0
-    else:
-        show()
-    contador = contador + 1
-    time.sleep(30)
+time.sleep(5)
+
+services()
+
+
+#while True:
+#    if contador > (60 * 2):
+#        show(0)
+#        contador = 0
+#    else:
+#        show()
+#    contador = contador + 1
+#
+#    time.sleep(60)
