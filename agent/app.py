@@ -77,15 +77,17 @@ slack = SlackApi()
 contador = 0
 time.sleep(5)
 
-services()
 
 
-#while True:
-#    if contador > (60 * 2):
-#        show(0)
-#        contador = 0
-#    else:
-#        show()
-#    contador = contador + 1
-#
-#    time.sleep(60)
+while True:
+    if contador > (60 * 2):
+        show(0)
+        contador = 0
+    else:
+        show()
+    contador = contador + 1
+    try:
+        services()
+    except:
+        pass
+    time.sleep(60)
