@@ -57,8 +57,8 @@ def show2():
         print(metric)
 
 def services():
-
-    request = requests.get("http://192.168.1.42/api/service/get/all")
+    print('http://nginx/api/service/get/all')
+    request = requests.get("http://nginx/api/service/get/all")
     services = list(request.json())
     for service in services:
         print(service['name'])       
