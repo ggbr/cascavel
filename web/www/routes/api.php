@@ -14,7 +14,13 @@ use Illuminate\Http\Request;
 */
 
 
-Route::get('service-log/set/{id}/{status}','ApiController@setServiceLog');
 
+// Routes of services
+Route::get('service-log/set/{id}/{status}','ApiController@setServiceLog');
 Route::get('service/get/all','ApiController@getServicesAll');
 Route::post('service/create','ApiController@setServices');
+
+// Routes of Serve
+Route::get('serve/get/all','ApiController@getAllServe');
+Route::post('serve/create','ApiController@setServe');
+

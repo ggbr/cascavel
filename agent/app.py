@@ -4,8 +4,8 @@ import os
 import time
 from netdata import Netdata
 from slackApi import SlackApi
-def show(alerts = 1):
-    netdata = Netdata()
+def show(netdata_host,alerts = 1):
+    netdata = Netdata(netdata_host)
     try:
         data = netdata.getAllMetrics()
     except:
@@ -49,12 +49,18 @@ def show(alerts = 1):
 
 
 
-def show2():
-    netdata = Netdata()
+def showTest():
+    netdata = Netdata('')
     data = netdata.getAllMetrics()
     os.system('cls' if os.name == 'nt' else 'clear')
     for metric in data.keys():
         print(metric)
+
+
+
+
+
+
 
 def services():
     print('http://nginx/api/service/get/all')
@@ -72,8 +78,15 @@ def services():
         except:
             slack.sendAlert('Tem algo errado com o serviço ' + service['name'])
         
-
-
+def server(contador):
+    request = requests.get("http://nginx/api/serve/get/all", timeout=5)
+    servers = list(request.json())
+    for server in servers:
+        if contador > (60):
+            show(server['url'],0)
+            contador = 0
+        else:
+            show(server['url'])
 
 print('Start service')
 slack = SlackApi()
@@ -84,14 +97,14 @@ time.sleep(5)
 
 
 while True:
-    if contador > (60 * 2):
-        show(0)
-        contador = 0
-    else:
-        show()
-    contador = contador + 1
     try:
+        server(contador)
         services()
     except:
-        pass
+        slack.sendAlert('Erro no serviço do Cascavel')
+    
+    if contador > (60):
+        contador = 0
+    else:
+        contador = contador + 1
     time.sleep(60)

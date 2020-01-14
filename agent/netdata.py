@@ -5,10 +5,10 @@ import time
 
 
 class Netdata():
-    def __init__(self,):
+    def __init__(self, host):
         # carregando configurações
         load_dotenv()
-        self.HOST = os.getenv("host")
+        self.HOST = host
 
     def getAllMetrics(self,):
         #request = requests.get(HOST + "/api/v1/data?chart=system.cpu&after=-1&points=1&group=average&format=json")
