@@ -32,6 +32,14 @@ class ApiController extends Controller
         return  response()->json($services);
     }
 
+    public function delServices($id){
+        $service = Service::find($id);
+        $service->forceDelete();
+        return  response()->json(['response' => 'ok']);
+
+
+    }
+
 
     public function setServiceLog($id, $status){
         $log = ServiceLog::create([
@@ -50,6 +58,11 @@ class ApiController extends Controller
     public function getAllServe(){
         $serve = Server::all();
         return  response()->json($serve);
+    }
+    public function delServe($id){
+        $service = Server::find($id);
+        $service->forceDelete();
+        return  response()->json(['response' => 'ok']);
     }
 
 }

@@ -32,7 +32,7 @@
                     <tr v-for="service in services">
                         <td>@{{ service.name }}</td>
                         <td>@{{ service.url }}</td>
-                        <td> <button class="button is-danger">Delete</button></td>
+                        <td> <button on:click="delServices(service.id)"  class="button is-danger">Delete</button></td>
                     </tr>
                 </tbody>
             </table>
@@ -56,7 +56,7 @@
                     <tr v-for="server in servers">
                         <td>@{{ server.name }}</td>
                         <td>@{{ server.url }}</td>
-                        <td> <button class="button is-danger">Delete</button></td>
+                        <td> <button  v-on:click="delServe(server.id)" class="button is-danger">Delete</button></td>
                     </tr>
                 </tbody>
             </table>
@@ -91,6 +91,15 @@
                     // error callback
                 });
            },
+           delServices: function(id){
+                // GET /someUrl
+                this.$http.get('/api/service/delete/' + id).then(response => {
+                    location.reload();
+
+                }, response => {
+                    // error callback
+                });
+           },
            createService: function(){
                 // GET /someUrl
                 this.$http.post('/api/service/create',
@@ -111,6 +120,17 @@
                     this.servers = response.body;
                 }, response => {
                     // error callback
+                });
+           },
+           delServe: function(id){
+                // GET /someUrl
+                alert(id)
+                this.$http.get('/api/serve/delete/' + id).then(response => {
+                    location.reload();
+
+                }, response => {
+                    location.reload();
+
                 });
            },
            createServer: function(){
