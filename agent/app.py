@@ -61,13 +61,17 @@ def services():
     request = requests.get("http://nginx/api/service/get/all", timeout=5)
     services = list(request.json())
     for service in services:
-        print(service['name'])       
-        r = requests.get(service['url'])
-        if r.status_code == 200:
-            print('o serviço ' + service['name'] + ' esta OK' )
-        else:
-            print('serviço ' + service['name'] +' esta fora do ar')
-            slack.sendAlert('serviço ' + service['name'] +' esta fora do ar')
+        try:
+            r = requests.get(service['url'])
+            print(service['name'])       
+            if r.status_code == 200:
+                print('o serviço ' + service['name'] + ' esta OK' )
+            else:
+                print('serviço ' + service['name'] +' esta fora do ar')
+                slack.sendAlert('serviço ' + service['name'] +' esta fora do ar')
+        except:
+            slack.sendAlert('Tem algo errado com o serviço ' + service['name'])
+        
 
 
 
