@@ -14,7 +14,7 @@
                 Hello in Cascavel
             </h1>
 
-            <h2 class="title">Monitored services</h2>
+            <h2 class="title">Monitored Server</h2>
             <table class="table">
                 <thead>
                     <tr>
@@ -37,6 +37,31 @@
                 </tbody>
             </table>
 
+
+            <h2 class="title">Monitored services</h2>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>URL</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><input v-model="serve_name" class="input" type="text" placeholder="Name service"></td>
+                        <td><input v-model="serve_url" class="input" type="text" placeholder="URL service"></td>
+                        <td> <button  v-on:click="createServer" class="button is-success">Create</button></td>
+                    </tr>
+                    <tr v-for="server in servers">
+                        <td>@{{ server.name }}</td>
+                        <td>@{{ server.url }}</td>
+                        <td> <button class="button is-danger">Delete</button></td>
+                    </tr>
+                </tbody>
+            </table>
+
+
         </div>
       </section>
 
@@ -48,8 +73,13 @@
         data: {
             message: 'Hello Vue!',
             services: [],
+            servers: [],
+
             service_name: '',
             service_url: '',
+
+            serve_name: '',
+            serve_url: '',
         },
 
         methods: {
@@ -74,11 +104,34 @@
                 },function (response) {
                    alert('Erro create service');
                 });
+           },
+           getServers: function(){
+                // GET /someUrl
+                this.$http.get('/api/serve/get/all').then(response => {
+                    this.servers = response.body;
+                }, response => {
+                    // error callback
+                });
+           },
+           createServer: function(){
+                // GET /someUrl
+                this.$http.post('/api/serve/create',
+                    {
+                        name: this.serve_name,
+                        url: this.serve_url,
+                        status: 1,
+                    }
+                ).then(function (response) {
+                    location.reload();
+                },function (response) {
+                   alert('Erro create serve');
+                });
            }
         },
 
         mounted:function(){
             this.getServices();
+            this.getServers();
         }
 
         })
