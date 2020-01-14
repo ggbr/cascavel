@@ -11,6 +11,6 @@
 |
 */
 
-Route::get('/', function () {
+Route::get('/cascavel', function () {
     return view('welcome');
 });
