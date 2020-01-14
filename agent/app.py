@@ -62,7 +62,7 @@ def services():
     services = list(request.json())
     for service in services:
         try:
-            r = requests.get(service['url'])
+            r = requests.get(service['url'], timeout=5)
             print(service['name'])       
             if r.status_code == 200:
                 print('o serviço ' + service['name'] + ' esta OK' )
