@@ -58,7 +58,7 @@ def show2():
 
 def services():
     print('http://nginx/api/service/get/all')
-    request = requests.get("http://nginx/api/service/get/all")
+    request = requests.get("http://nginx/api/service/get/all", timeout=5)
     services = list(request.json())
     for service in services:
         print(service['name'])       
@@ -73,7 +73,7 @@ def services():
 
 print('Start service')
 slack = SlackApi()
-#slack.sendAlert('Iniciando serviço de monitoramento')
+slack.sendAlert('Iniciando serviço de monitoramento')
 contador = 0
 time.sleep(5)
 
