@@ -4,12 +4,12 @@ import os
 import time
 from netdata import Netdata
 from slackApi import SlackApi
-def show(netdata_host,alerts = 1):
+def show(netdata_name,netdata_host,alerts = 1):
     netdata = Netdata(netdata_host)
     try:
         data = netdata.getAllMetrics()
     except:
-        slack.sendAlert('Alerta!, Cargo Viewer não responde')
+        slack.sendAlert('Alerta!, Netdata do servidor ' + netdata_name + ' não responde')
         return 0 
 
     os.system('cls' if os.name == 'nt' else 'clear')
@@ -83,10 +83,10 @@ def server(contador):
     servers = list(request.json())
     for server in servers:
         if contador > (60):
-            show(server['url'],0)
+            show(server['name'],server['url'],0)
             contador = 0
         else:
-            show(server['url'])
+            show(server['name'],server['url'])
 
 print('Start service')
 slack = SlackApi()
