@@ -1,7 +1,6 @@
 @extends('app')
 @section('content')
-      <section id="app" class="section">
-        <div class="container">
+      <div id="app" >
             <h1 class="title">
                 Hello in Cascavel
             </h1>
@@ -52,8 +51,7 @@
                     </tr>
                 </tbody>
             </table>
-        </div>
-      </section>
+    </div>
 @endsection
 
 @section('script')

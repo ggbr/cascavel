@@ -35,10 +35,26 @@
               </div>
             </div>
           </nav>
-
-        @yield('content')
+          <section class="section">
+            <div class="container">
+                @yield('content')
+            </div>
+        </section>
+        <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/vue-resource@1.5.1"></script>
         @yield('script')
+        <style>
+
+            html {
+                height: 100%;
+            }
+            body {
+                background-color: #34495e;
+                min-height: 100%;
+                color: #ecf0f1;
+            }
+
+        </style>
     </body>
 </html>
