@@ -12,5 +12,9 @@
 */
 
 Route::get('/cascavel', function () {
-    return view('welcome');
+    return view('dashboard');
+});
+
+Route::get('/cascavel/config', function () {
+    return view('config');
 });
