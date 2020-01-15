@@ -11,8 +11,9 @@
             <div class="column" v-for="server in servers">
                 <div class="card" >
                     <div class="card-content">
-                        <h2 class="title">@{{server.name}}</h2>
+                        <h2 class="title">@{{server.name}} </h2>
                         <a class="button is-dark" target="_blanck" v-bind:href="server.url"> Access server</a>
+                        <br>@{{server.url}}
                         <br>
                         <br>
                         <embed  v-bind:src="server.url + '/api/v1/badge.svg?chart=system.cpu&alarm=10min_cpu_usage&refresh=auto'" type="image/svg+xml" height="20"/>
