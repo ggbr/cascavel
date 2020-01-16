@@ -16,14 +16,14 @@ def show(netdata_name,netdata_host,alerts = 1):
     for metric in data.keys():
         if alerts == 0:
             if metric == 'system.load':
-                slack.sendAlert('Servidor funcionando perfeitamente\n. Load de 15 mim ' + str(data[metric]['dimensions']['load15']['value']))
+                slack.sendAlert('Servidor ' + netdata_name + ' funcionando perfeitamente\n. Load de 15 mim ' + str(data[metric]['dimensions']['load15']['value']))
         if metric == 'system.load':
             print("System Load\n")
             print("  load 1: " + str(data[metric]['dimensions']['load1']['value']))
             print("  load 5: " + str(data[metric]['dimensions']['load5']['value']))
             print("  load 15: " + str(data[metric]['dimensions']['load15']['value']))
             if( data[metric]['dimensions']['load1']['value'] > 7):
-                slack.sendAlert('Alerta! a media de 1 mim de load do servidor ' + str(data[metric]['dimensions']['load1']['value']))
+                slack.sendAlert('Alerta! a media de 1 mim de load do servidor ' + netdata_name + ' ' + str(data[metric]['dimensions']['load1']['value']))
 
 
         if metric == 'system.cpu':
@@ -31,7 +31,7 @@ def show(netdata_name,netdata_host,alerts = 1):
             cpu = 100 - valor
             print('CPU: ' + str(cpu) + '%')
             if( cpu > 95):
-                slack.sendAlert('Alerta! CPU  esta em ' + str(cpu) +' %')
+                slack.sendAlert('Alerta! CPU do servidor ' + netdata_name + ' está em ' + str(cpu) +' %')
 
 
         if metric == 'system.ram':
@@ -44,7 +44,7 @@ def show(netdata_name,netdata_host,alerts = 1):
             uso = used/valor * 100
             print("Uso de memoría: " + str(uso) + " %")
             if( uso > 90 ):
-                slack.sendAlert('Alerta! memoría  esta em ' + str(uso)+' %')
+                slack.sendAlert('Alerta! memoría do servidor ' + netdata_name + ' está em ' + str(uso)+' %')
 
 
 
